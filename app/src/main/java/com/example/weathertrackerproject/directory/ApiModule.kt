@@ -32,7 +32,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideApi(retrofit: Retrofit.Builder): Api =
-      retrofit
+        retrofit
             .build()
             .create(Api::class.java)
 

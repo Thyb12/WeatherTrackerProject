@@ -11,7 +11,7 @@ data class Location(
     val localtime_epoch: Int,
     val utc_offset: String
 ) {
-    constructor() : this("","","","","","","",0,"")
+    constructor() : this("", "", "", "", "", "", "", 0, "")
 }
 
 

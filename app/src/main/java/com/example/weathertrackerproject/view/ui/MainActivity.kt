@@ -1,7 +1,6 @@
 package com.example.weathertrackerproject.view.ui
 
-import android.content.res.Resources
-import android.graphics.drawable.BitmapDrawable
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
@@ -18,17 +17,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //Load Information
-        // weatherViewModel.loadData()
+        viewModel.loadData(this)
 
         //refresh Button
         binding.update.setOnClickListener {
-           viewModel.loadData(this)
+            viewModel.loadData(this)
         }
 
         //Update Information
@@ -37,18 +37,17 @@ class MainActivity : AppCompatActivity() {
             binding.weatherIcon.setImageDrawable(viewModel.image.value)
             binding.name.text = newWeatherInfo.location?.name ?: ""
             binding.description.text = newWeatherInfo.current.weatherDescriptions[0]
-            binding.temperature.text = newWeatherInfo.current.temperature.toString()
+            binding.temperature.text = newWeatherInfo.current.temperature.toString() + " degrée"
 
             binding.windDir.text = newWeatherInfo.current.windDir
-            binding.windspeed.text = newWeatherInfo.current.windSpeed.toString()
-            binding.winddegree.text = newWeatherInfo.current.windDegree.toString()
+            binding.windspeed.text = newWeatherInfo.current.windSpeed.toString() + " km/h"
+            binding.winddegree.text = newWeatherInfo.current.windDegree.toString() + " degrée"
 
-            binding.precip.text = newWeatherInfo.current.precip.toString()
-            binding.humidity.text = newWeatherInfo.current.humidity.toString()
-
+            binding.precip.text = newWeatherInfo.current.precip.toString() + " %"
+            binding.humidity.text = newWeatherInfo.current.humidity.toString() + " %"
 
 
         }
-        viewModel.weatherInfo.observe(this,info)
+        viewModel.weatherInfo.observe(this, info)
     }
 }

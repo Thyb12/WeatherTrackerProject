@@ -6,6 +6,6 @@ data class Request(
     val language: String,
     val unit: String
 ) {
-    constructor() : this("","","","")
+    constructor() : this("", "", "", "")
 }
 

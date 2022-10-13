@@ -7,7 +7,6 @@ import android.os.Build
 import androidx.annotation.RequiresPermission
 import com.example.weathertrackerproject.model.WeatherData
 import com.example.weathertrackerproject.service.api.Api
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -34,7 +33,7 @@ class RepositoryImpl(
             val latLon = location.latitude.toString() + "," + location.longitude
             val result = api.updateWeatherData(key = key, latLon = latLon)
             val gson = GsonBuilder().serializeNulls().create()
-            val re = gson.fromJson(result,WeatherData::class.java)
+            val re = gson.fromJson(result, WeatherData::class.java)
             return Result.success(re)
         }
         return Result.failure(Throwable("no location"))

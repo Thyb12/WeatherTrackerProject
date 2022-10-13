@@ -1,13 +1,10 @@
 package com.example.weathertrackerproject.view.viewmodel
 
-import android.R.attr.x
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -45,21 +42,24 @@ class MainViewModel @Inject constructor(
                 ) {
                     //Update Weather Information
                     val result = repository.updateWeatherData()
-                    if (result.isSuccess){
+                    if (result.isSuccess) {
                         _weatherInfo.value = result.getOrNull()
 
                         //ICON URL to BITMAP
                         result.getOrNull()?.let {
-                            if (it.current._weather_icons.isNotEmpty()){
+                            if (it.current._weather_icons.isNotEmpty()) {
                                 val connection: HttpURLConnection =
                                     URL(it.current._weather_icons[0]).openConnection() as HttpURLConnection
                                 connection.connect()
                                 val input: InputStream = connection.inputStream
-                                _image.value = BitmapDrawable(Resources.getSystem(),BitmapFactory.decodeStream(input))
+                                _image.value = BitmapDrawable(
+                                    Resources.getSystem(),
+                                    BitmapFactory.decodeStream(input)
+                                )
                             }
                         }
-                        } else {
-                            //Information besoin du wifi / localisation
+                    } else {
+                        //Information besoin du wifi / localisation
 
                     }
 

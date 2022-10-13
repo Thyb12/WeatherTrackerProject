@@ -24,7 +24,7 @@ data class Current(
     @SerializedName("cloudcover")
     val _cloudCover: Int
 ) {
-    constructor() : this(0, arrayOf(),arrayOf(),0,0,"",0,0,0,0)
+    constructor() : this(0, arrayOf(), arrayOf(), 0, 0, "", 0, 0, 0, 0)
 
     val temperature get() = _temperature
     val weatherIcons get() = _weather_icons
