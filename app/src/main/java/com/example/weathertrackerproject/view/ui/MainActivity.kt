@@ -37,11 +37,11 @@ class MainActivity : AppCompatActivity() {
             binding.weatherIcon.setImageDrawable(viewModel.image.value)
             binding.name.text = newWeatherInfo.location?.name ?: ""
             binding.description.text = newWeatherInfo.current.weatherDescriptions[0]
-            binding.temperature.text = newWeatherInfo.current.temperature.toString() + " degrée"
+            binding.temperature.text = newWeatherInfo.current.temperature.toString() + " degré"
 
             binding.windDir.text = newWeatherInfo.current.windDir
             binding.windspeed.text = newWeatherInfo.current.windSpeed.toString() + " km/h"
-            binding.winddegree.text = newWeatherInfo.current.windDegree.toString() + " degrée"
+            binding.winddegree.text = newWeatherInfo.current.windDegree.toString() + " degré"
 
             binding.precip.text = newWeatherInfo.current.precip.toString() + " %"
             binding.humidity.text = newWeatherInfo.current.humidity.toString() + " %"
