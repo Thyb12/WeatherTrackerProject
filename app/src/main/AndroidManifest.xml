@@ -18,7 +18,7 @@
         android:theme="@style/Theme.WeatherTrackerProject"
         tools:targetApi="31">
         <activity
-            android:name=".view.ui.MainActivity"
+            android:name=".app.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.WeatherTrackerProject.NoActionBar">

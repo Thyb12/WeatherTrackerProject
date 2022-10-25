@@ -1,12 +1,13 @@
-package com.example.weathertrackerproject.service.repository
+package com.example.weathertrackerproject.data.repository
 
 import android.content.Context
 import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import androidx.annotation.RequiresPermission
-import com.example.weathertrackerproject.model.WeatherData
-import com.example.weathertrackerproject.service.api.Api
+import com.example.weathertrackerproject.domain.model.WeatherData
+import com.example.weathertrackerproject.data.api.Api
+import com.example.weathertrackerproject.domain.repository.Repository
 import com.google.gson.GsonBuilder
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine

@@ -1,4 +1,4 @@
-package com.example.weathertrackerproject.view.ui
+package com.example.weathertrackerproject.app.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.weathertrackerproject.databinding.ActivityMainBinding
-import com.example.weathertrackerproject.model.WeatherData
-import com.example.weathertrackerproject.view.viewmodel.MainViewModel
+import com.example.weathertrackerproject.domain.model.WeatherData
+import com.example.weathertrackerproject.app.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

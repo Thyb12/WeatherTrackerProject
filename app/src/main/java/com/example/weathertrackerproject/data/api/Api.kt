@@ -1,4 +1,4 @@
-package com.example.weathertrackerproject.service.api
+package com.example.weathertrackerproject.data.api
 
 import com.google.gson.JsonElement
 import retrofit2.http.GET

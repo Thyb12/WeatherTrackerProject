@@ -1,4 +1,4 @@
-package com.example.weathertrackerproject.model
+package com.example.weathertrackerproject.domain.model
 
 data class Request(
     val type: String,

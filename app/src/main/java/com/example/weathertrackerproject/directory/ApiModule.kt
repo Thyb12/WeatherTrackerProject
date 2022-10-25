@@ -1,6 +1,6 @@
 package com.example.weathertrackerproject.directory
 
-import com.example.weathertrackerproject.service.api.Api
+import com.example.weathertrackerproject.data.api.Api
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

@@ -1,4 +1,4 @@
-package com.example.weathertrackerproject.view.viewmodel
+package com.example.weathertrackerproject.app.viewmodel
 
 import android.app.Activity
 import android.content.pm.PackageManager
@@ -10,8 +10,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weathertrackerproject.model.WeatherData
-import com.example.weathertrackerproject.service.repository.Repository
+import com.example.weathertrackerproject.domain.model.WeatherData
+import com.example.weathertrackerproject.domain.UseCase.UpdateWeatherDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.InputStream
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: Repository
+    private val updateWeatherDataUseCase: UpdateWeatherDataUseCase
 ) : ViewModel() {
 
     private val _weatherInfo = MutableLiveData<WeatherData>()
@@ -41,7 +41,7 @@ class MainViewModel @Inject constructor(
                     == PackageManager.PERMISSION_GRANTED
                 ) {
                     //Update Weather Information
-                    val result = repository.updateWeatherData()
+                    val result = updateWeatherDataUseCase.updateWeatherData()
                     if (result.isSuccess) {
                         _weatherInfo.value = result.getOrNull()
 
