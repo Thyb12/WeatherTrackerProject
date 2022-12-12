@@ -26,94 +26,117 @@ fun WeatherScreen(
 ) {
     val weatherInfo = viewModel.state.value
     val textColor = MaterialTheme.colorScheme.secondary
-    Column(
-        modifier = Modifier
-            .padding(all = 8.dp)
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
 
-        Spacer(modifier = Modifier.height(8.dp))
+    Box(modifier = Modifier.fillMaxSize()) {
 
+        //TOP START CITY INFORMATION
+        Column(
+            modifier = Modifier
+                .padding(all = 8.dp)
+                .align(Alignment.TopStart)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = (weatherInfo.weatherInfo?.location?.name
+                    ?: weatherInfo.weatherInfo?.location?.region ?: ""),
+                color = textColor,
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
+
+        //Center ICON INFO
         Image(
             painter = rememberAsyncImagePainter(weatherInfo.image),
             contentDescription = "weather Image",
             modifier = Modifier
-                // Set image size to 40 dp
+                .align(Alignment.Center)
                 .size(70.dp),
         )
 
-        // Add a horizontal space between the image and the column
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "ville : " + (weatherInfo.weatherInfo?.location?.name
-                ?: weatherInfo.weatherInfo?.location?.region ?: ""),
-            color = textColor
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = weatherInfo.weatherInfo?.current?.weatherDescriptions?.get(0) ?: "",
-            color = textColor
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = weatherInfo.weatherInfo?.current?.temperature.toString() + " degrés",
-            color = textColor
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-
-            Image(
-                painter = painterResource(id = R.drawable.wind),
-                contentDescription = "",
-                colorFilter = ColorFilter.tint(textColor),
-                modifier = Modifier.size(16.dp)
-            )
+        //Bottom
 
 
-            Spacer(modifier = Modifier.width(8.dp))
-
+        //LEFT INFORMATION
+        //INFORMATION Weather Description and Temperature
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(start = 10.dp, bottom = 50.dp),
+            verticalArrangement = Arrangement.Top
+        ) {
             Text(
-                text = weatherInfo.weatherInfo?.current?.windDir.toString(),
-                color = textColor
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Text(
-                text = weatherInfo.weatherInfo?.current?.windSpeed.toString() + " km/h",
+                text = weatherInfo.weatherInfo?.current?.weatherDescriptions?.get(0) ?: "",
                 color = textColor
             )
 
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = weatherInfo.weatherInfo?.current?.temperature.toString() + " °",
+                color = textColor,
+                style = MaterialTheme.typography.titleLarge
+            )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        //RIGHT INFORMATION
+        Column(
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = 10.dp, bottom = 50.dp)
+        ) {
 
+            //WIND Information
+            Row(
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.wind),
+                    contentDescription = "",
+                    colorFilter = ColorFilter.tint(textColor),
+                    modifier = Modifier.size(16.dp)
+                )
 
-        Text(
-            text = "precipitation : " + weatherInfo.weatherInfo?.current?.precip.toString() + " %",
-            color = textColor
-        )
+                Spacer(modifier = Modifier.width(8.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = weatherInfo.weatherInfo?.current?.windDir.toString(),
+                    color = textColor
+                )
+                Spacer(modifier = Modifier.width(8.dp))
 
-        Text(
-            text = "humidity : " + weatherInfo.weatherInfo?.current?.humidity.toString() + " %",
-            color = textColor
-        )
+                Text(
+                    text = weatherInfo.weatherInfo?.current?.windSpeed.toString() + " km/h",
+                    color = textColor
+                )
+            }
 
-        Spacer(modifier = Modifier.height(8.dp))
+            //INFORMATION precipitation and humidity
+            Spacer(modifier = Modifier.height(8.dp))
 
+            Text(
+                text = "précipitation : " + weatherInfo.weatherInfo?.current?.precip.toString() + " %",
+                color = textColor
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "humiditée : " + weatherInfo.weatherInfo?.current?.humidity.toString() + " %",
+                color = textColor
+            )
+        }
+
+        //RESET WEATHER INFORMATION BUTTON
         Button(
             onClick = {
                 viewModel.onEvent(MainEvent.Button(activity))
             },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 10.dp)
         ) {
             Text(
                 text = "RESET",
@@ -121,7 +144,6 @@ fun WeatherScreen(
             )
         }
     }
-
 }
 
 @Preview
