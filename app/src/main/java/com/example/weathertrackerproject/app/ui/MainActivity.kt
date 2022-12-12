@@ -1,53 +1,33 @@
 package com.example.weathertrackerproject.app.ui
 
-import android.annotation.SuppressLint
+
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.Surface
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import com.example.weathertrackerproject.databinding.ActivityMainBinding
-import com.example.weathertrackerproject.domain.model.WeatherData
+import androidx.compose.material3.MaterialTheme
+import com.example.weathertrackerproject.app.ui.weatherActivity.WeatherScreen
 import com.example.weathertrackerproject.app.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
-    private lateinit var binding: ActivityMainBinding
-
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        //Load Information
         viewModel.loadData(this)
-
-        //refresh Button
-        binding.update.setOnClickListener {
-            viewModel.loadData(this)
+        setContent {
+            ComposeTheme() {
+                Surface(
+                    color = MaterialTheme.colorScheme.background
+                ){
+                    WeatherScreen(activity = this)
+                }
+            }
         }
-
-        //Update Information
-        val info = Observer<WeatherData> { newWeatherInfo ->
-
-            binding.weatherIcon.setImageDrawable(viewModel.image.value)
-            binding.name.text = newWeatherInfo.location?.name ?: ""
-            binding.description.text = newWeatherInfo.current.weatherDescriptions[0]
-            binding.temperature.text = newWeatherInfo.current.temperature.toString() + " degrés"
-
-            binding.windDir.text = newWeatherInfo.current.windDir
-            binding.windspeed.text = newWeatherInfo.current.windSpeed.toString() + " km/h"
-            binding.winddegree.text = newWeatherInfo.current.windDegree.toString() + " degrés"
-
-            binding.precip.text = newWeatherInfo.current.precip.toString() + " %"
-            binding.humidity.text = newWeatherInfo.current.humidity.toString() + " %"
-
-
-        }
-        viewModel.weatherInfo.observe(this, info)
     }
 }

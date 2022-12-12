@@ -2,9 +2,9 @@ package com.example.weathertrackerproject.app.viewmodel
 
 import android.app.Activity
 import android.content.pm.PackageManager
-import android.content.res.Resources
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,9 +14,6 @@ import com.example.weathertrackerproject.domain.model.WeatherData
 import com.example.weathertrackerproject.domain.UseCase.UpdateWeatherDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
 import javax.inject.Inject
 
 
@@ -25,11 +22,20 @@ class MainViewModel @Inject constructor(
     private val updateWeatherDataUseCase: UpdateWeatherDataUseCase
 ) : ViewModel() {
 
-    private val _weatherInfo = MutableLiveData<WeatherData>()
-    val weatherInfo: LiveData<WeatherData> = _weatherInfo
+    private val _state : MutableState<WeatherState> = mutableStateOf(WeatherState())
+    val state: State<WeatherState> = _state
 
-    private val _image = MutableLiveData<BitmapDrawable>()
-    val image: LiveData<BitmapDrawable> = _image
+    fun onEvent(event: MainEvent) {
+        when(event){
+            is MainEvent.Button -> {
+                loadData(event.activity)
+            }
+        }
+
+    }
+
+
+
 
     fun loadData(activity: Activity) {
         viewModelScope.launch {
@@ -43,21 +49,14 @@ class MainViewModel @Inject constructor(
                     //Update Weather Information
                     val result = updateWeatherDataUseCase.updateWeatherData()
                     if (result.isSuccess) {
-                        _weatherInfo.value = result.getOrNull()
 
-                        //ICON URL to BITMAP
                         result.getOrNull()?.let {
-                            if (it.current._weather_icons.isNotEmpty()) {
-                                val connection: HttpURLConnection =
-                                    URL(it.current._weather_icons[0]).openConnection() as HttpURLConnection
-                                connection.connect()
-                                val input: InputStream = connection.inputStream
-                                _image.value = BitmapDrawable(
-                                    Resources.getSystem(),
-                                    BitmapFactory.decodeStream(input)
-                                )
-                            }
+                            _state.value = _state.value.copy(
+                                weatherInfo = result.getOrNull(),
+                                image = it.current._weather_icons[0]
+                            )
                         }
+
                     } else {
                         //Information besoin du wifi / localisation
 
@@ -79,4 +78,13 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+}
+data class WeatherState(
+    val weatherInfo: WeatherData? = null,
+    val image: String = ""
+)
+
+sealed class MainEvent {
+
+    data class Button(val activity: Activity): MainEvent()
 }
