@@ -14,14 +14,16 @@ private val DarkColorPalette = darkColorScheme(
     background = DarckBlue,
     primary = DarckBluePrimary,
     primaryContainer = BLueDeap,
-    secondary = White
+    secondary = White,
+    tertiary = Gray
 )
 
 private val LightColorPalette = lightColorScheme(
     background = LightBlue,
     primary = LightBluePrimary,
     primaryContainer = BLueDeap,
-    secondary = Black
+    secondary = Black,
+    tertiary = Gray
 )
 
 @Composable
